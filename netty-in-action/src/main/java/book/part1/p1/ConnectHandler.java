@@ -1,4 +1,4 @@
-package book.part1;
+package book.part1.p1;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
