@@ -34,7 +34,7 @@ public class EchoServer {
 		this.port = port;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		if(args.length != 1) {
 			System.out.println(
 					"Usage: " + EchoServer.class.getSimpleName() +
@@ -45,7 +45,7 @@ public class EchoServer {
 		new EchoServer(port).start();
 	}
 	
-	public void start() {
+	public void start() throws Exception {
 		final EchoServerHandler serverHandler = new EchoServerHandler();
 		EventLoopGroup group = new NioEventLoopGroup();
 
@@ -59,10 +59,6 @@ public class EchoServer {
 				.childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline().addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-						ch.pipeline().addLast("decoder", new StringDecoder());
-						ch.pipeline().addLast("encoder", new StringEncoder());
-
 						ch.pipeline().addLast(serverHandler);
 					}
 				})
@@ -71,9 +67,8 @@ public class EchoServer {
 			
 			ChannelFuture f = b.bind().sync();
 		
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} finally {
+			group.shutdownGracefully().sync(); 
 		}
 	}
 	

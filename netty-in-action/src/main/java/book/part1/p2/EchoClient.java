@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import book.common.ConfigParameter;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -46,36 +47,38 @@ public class EchoClient {
 
 					@Override
 					protected void initChannel(Channel ch) throws Exception {
-						ch.pipeline().addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-						ch.pipeline().addLast("decoder", new StringDecoder());
-						ch.pipeline().addLast("encoder", new StringEncoder());
-
 						ch.pipeline().addLast(new EchoChannelHandler());
 					}
 				});
 			
-			Channel channel = b.connect().sync().channel();
-			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            while(true){
-                channel.writeAndFlush(in.readLine() + "\r\n");
-            }
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ChannelFuture f = b.connect().sync();
+			f.channel().closeFuture().sync();
 		} finally {
 			group.shutdownGracefully().sync();
 		}
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
+		String host;
+		int port;
+		
+		// if not input parameter  
 		if(args.length != 2) {
 			System.err.println(
 					 "Usage: " + EchoClient.class.getSimpleName() +
-					 " <"+ ConfigParameter.HOST +"> <"+ ConfigParameter.PORT +">");
+					 " <HOST> <PORT>");
+			host = ConfigParameter.HOST;
+			port = Integer.parseInt(ConfigParameter.PORT);
+			
+		} else {
+			host = args[0];
+			port = Integer.parseInt(args[1]);
 		}
 		
-		String host = ConfigParameter.HOST;
-		int port = Integer.parseInt(ConfigParameter.PORT);
+		
+		System.err.println(
+				 "Server " + host + ":" + port);
+		
 		new EchoClient(host, port).start();
 	}
 }
