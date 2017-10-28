@@ -11,10 +11,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.Delimiters;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * ClassName:EchoServer.java
@@ -48,10 +44,10 @@ public class EchoServer {
 	public void start() throws Exception {
 		final EchoServerHandler serverHandler = new EchoServerHandler();
 		EventLoopGroup group = new NioEventLoopGroup();
-
         EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
         EventLoopGroup workerGroup = new NioEventLoopGroup();
-		try {
+
+        try {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(group, workerGroup)
 				.channel(NioServerSocketChannel.class)

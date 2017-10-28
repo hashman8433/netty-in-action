@@ -9,6 +9,6 @@ package book.common;
  * @Date	 2017年10月26日
  */
 public class ConfigParameter {
-	public static String PORT = "8080";
+	public static String PORT = "8083";
 	public static String HOST = "localhost";
 }
