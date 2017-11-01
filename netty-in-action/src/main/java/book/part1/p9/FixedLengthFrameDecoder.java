@@ -14,10 +14,10 @@ import io.netty.handler.codec.ByteToMessageDecoder;
  * @since    Ver 1.1
  * @Date	 2017年10月30日
  */
-public class FixedLengthFramDecoder extends ByteToMessageDecoder {
+public class FixedLengthFrameDecoder extends ByteToMessageDecoder {
 
 	private final int frameLength;
-	public FixedLengthFramDecoder(int frameLength) {
+	public FixedLengthFrameDecoder(int frameLength) {
 		if(frameLength <= 0) {
 			throw new IllegalArgumentException(
 					"frameLength must be a positive integer: " + frameLength);
