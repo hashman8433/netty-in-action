@@ -71,7 +71,7 @@ public class EchoClient {
 		
 		
 		System.err.println(
-				 "Server " + host + ":" + port);
+				 "Default Server " + host + ":" + port);
 		
 		new EchoClient(host, port).start();
 	}

@@ -38,13 +38,13 @@ public class EchoServer {
 		}
 		
 		int port = Integer.parseInt(args.length != 1? ConfigParameter.PORT: args[0]);
+		System.out.println(port);
 		new EchoServer(port).start();
 	}
 	
 	public void start() throws Exception {
 		final EchoServerHandler serverHandler = new EchoServerHandler();
 		EventLoopGroup group = new NioEventLoopGroup();
-        EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
@@ -62,7 +62,7 @@ public class EchoServer {
 	            .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
 			
 			ChannelFuture f = b.bind().sync();
-		
+			f.channel().closeFuture().sync();
 		} finally {
 			group.shutdownGracefully().sync(); 
 		}
