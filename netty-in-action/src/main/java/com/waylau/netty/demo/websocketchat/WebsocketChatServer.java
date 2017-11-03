@@ -31,7 +31,7 @@ public class WebsocketChatServer {
              .channel(NioServerSocketChannel.class) // (3)
              .childHandler(new WebsocketChatServerInitializer())  //(4)
              .option(ChannelOption.SO_BACKLOG, 128)          // (5)
-             .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
+             .childOption(ChannelOption.SO_KEEPALIVE, false); // (6)
             
     		System.out.println("WebsocketChatServer 启动了" + port);
     		
@@ -55,7 +55,7 @@ public class WebsocketChatServer {
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);
         } else {
-            port = 8080;
+            port = 8081;
         }
         new WebsocketChatServer(port).run();
 

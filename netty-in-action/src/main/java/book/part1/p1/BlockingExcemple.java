@@ -1,4 +1,4 @@
-package book.part1;
+package book.part1.p1;
 
 import java.io.*;
 import java.net.*;
