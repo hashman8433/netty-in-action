@@ -1,26 +1,24 @@
-package book.part1.p10;
+package book.part2.p10;
 
 import java.util.List;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.ReplayingDecoder;
 
 /**
- * ClassName:ToIntegerDecoder.java
+ * ClassName:ToIntegerDecoder2.java
  * Reason:	 TODO ADD REASON
  *
  * @author   zhaozj
  * @since    Ver 1.1
- * @Date	 2017年10月30日
+ * @Date	 2017年11月2日
  */
-public class ToIntegerDecoder extends ByteToMessageDecoder {
-	
+public class ToIntegerDecoder2 extends ReplayingDecoder<Void> {
+
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		if(in.readableBytes() >= 4) {
-			out.add(in.readInt());
-		}
+		out.add(in.readInt());
 	}
-
+	
 }
