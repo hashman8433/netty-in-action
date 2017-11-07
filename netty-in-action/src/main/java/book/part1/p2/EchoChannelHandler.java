@@ -35,9 +35,5 @@ public class EchoChannelHandler extends
 		cause.printStackTrace();
 		ctx.close();
 	}
-	
-
-	
-
 
 }
